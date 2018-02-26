@@ -1,18 +1,8 @@
 defmodule Emperor do
-  @moduledoc """
-  Documentation for Emperor.
-  """
+use Application
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Emperor.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def start(_type, _args) do
+    IO.puts "Starting the application..."
+    Emperor.TopSupervisor.start_link()
   end
 end

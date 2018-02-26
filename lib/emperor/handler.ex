@@ -1,6 +1,7 @@
 defmodule Emperor.Handler do
 
 alias  Emperor.Conv
+alias  Emperor.BearController
 
 import Emperor.FileHandler, only: [handle_file: 2]
 import Emperor.Plugins, only: [rewrite_path: 1, log: 1, track: 1]
@@ -22,12 +23,25 @@ import Emperor.Parser, only: [parse: 1]
     %{ conv | status: 200, resp_body: "Bears, Lions, Tigers" }
   end
 
+  def route(%{method: "DELETE", path: "/bears/" <> _id} = conv) do
+    BearController.delete(conv, conv.params)
+  end
+
+  def route(%Conv{ method: "GET", path: "/api/bears" } = conv) do
+    Emperor.Api.BearController.index(conv)
+  end
+
   def route(%Conv{ method: "GET", path: "/bears" } = conv) do
-    %{ conv | status: 200, resp_body: "Teddy, Smokey, Paddington" }
+    BearController.index(conv)
   end
 
   def route(%Conv{ method: "GET", path: "/bears/" <> id } = conv) do
-    %{ conv | status: 200, resp_body: "Bear #{id}" }
+    params = Map.put(conv.params, "id", id)
+    BearController.show(conv, params)
+  end
+
+  def route(%Conv{method: "POST", path: "/bears"} = conv) do
+    BearController.create(conv, conv.params)
   end
 
   def route(%Conv{method: "GET", path: "/pages/" <> file} = conv) do
@@ -41,101 +55,13 @@ import Emperor.Parser, only: [parse: 1]
     %{ conv | status: 404, resp_body: "No #{path} here!"}
   end
 
-  def route(%Conv{method: "DELETE", path: "/bears/" <> _id} = conv) do
-    %{ conv | status: 403, resp_body: "Bears must never be deleted!"}
-  end
-
   def format_response(%Conv{} = conv) do
     """
-    HTTP/1.1 #{Conv.full_status(conv)}
-    Content-Type: text/html
-    Content-Length: #{String.length(conv.resp_body)}
-
+    HTTP/1.1 #{Conv.full_status(conv)}\r
+    Content-Type: #{conv.resp_content_type}\r
+    Content-Length: #{String.length(conv.resp_body)}\r
+    \r
     #{conv.resp_body}
     """
   end
-
-  defp status_reason(code) do
-    %{
-      200 => "OK",
-      201 => "Created",
-      401 => "Unauthorized",
-      403 => "Forbidden",
-      404 => "Not Found",
-      500 => "Internal Server Error"
-    }[code]
-  end
-
 end
-
-request = """
-GET /wildthings HTTP/1.1
-Host: example.com
-User-Agent: ExampleBrowser/1.0
-Accept: */*
-
-"""
-
-response = Emperor.Handler.handle(request)
-
-IO.puts response
-
-request = """
-GET /bears HTTP/1.1
-Host: example.com
-User-Agent: ExampleBrowser/1.0
-Accept: */*
-
-"""
-
-response = Emperor.Handler.handle(request)
-
-IO.puts response
-
-request = """
-GET /bigfoot HTTP/1.1
-Host: example.com
-User-Agent: ExampleBrowser/1.0
-Accept: */*
-
-"""
-
-response = Emperor.Handler.handle(request)
-
-IO.puts response
-
-request = """
-GET /bears/1 HTTP/1.1
-Host: example.com
-User-Agent: ExampleBrowser/1.0
-Accept: */*
-
-"""
-
-response = Emperor.Handler.handle(request)
-
-IO.puts response
-
-request = """
-GET /wildlife HTTP/1.1
-Host: example.com
-User-Agent: ExampleBrowser/1.0
-Accept: */*
-
-"""
-
-response = Emperor.Handler.handle(request)
-
-IO.puts response
-
-request = """
-GET /pages/about HTTP/1.1
-Host: example.com
-User-Agent: ExampleBrowser/1.0
-Accept: */*
-
-"""
-
-response = Emperor.Handler.handle(request)
-
-IO.puts response
