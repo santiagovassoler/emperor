@@ -1,3 +1,11 @@
+# Import all plugins from `rel/plugins`
+# They can then be used by adding `plugin MyPlugin` to
+# either an environment, or release definition, where
+# `MyPlugin` is the name of the plugin module.
+Path.join(["rel", "plugins", "*.exs"])
+|> Path.wildcard()
+|> Enum.map(&Code.eval_file(&1))
+
 use Mix.Releases.Config,
     # This sets the default release built by `mix release`
     default_release: :default,
@@ -14,15 +22,21 @@ use Mix.Releases.Config,
 # and environment configuration is called a profile
 
 environment :dev do
+  # If you are running Phoenix, you should make sure that
+  # server: true is set and the code reloader is disabled,
+  # even in dev mode.
+  # It is recommended that you build with MIX_ENV=prod and pass
+  # the --env flag to Distillery explicitly if you want to use
+  # dev mode.
   set dev_mode: true
   set include_erts: false
-  set cookie: :"b2*S(%S:NADu>~2l[AwMEAN0Lt1AH_c42=H/_.x6G.SHUus$JLo$p6B3`t];P*N|"
+  set cookie: :"s*!@P:PI=*gOp^Owj5w}sE!SU>X=HBF/6W=4.NkxMH&HJ<,lX?AF6r4aJ9Dt~p7]"
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"lL5<[xHYr1HFP0wc]2WKQb&<sx$tLVp}07`(zG@[a/U;hx_ZunJ(`RJL9=y6Q|sn"
+  set cookie: :"^m9M?EBbd(jF&7abLKFGAj/7l}{j1aY,K8/YYgp~oxil]dd?k3npx%EtZV?r02ZQ"
 end
 
 # You may define one or more releases in this file.
@@ -32,4 +46,7 @@ end
 
 release :emperor do
   set version: current_version(:emperor)
+  set applications: [
+    :runtime_tools
+  ]
 end
