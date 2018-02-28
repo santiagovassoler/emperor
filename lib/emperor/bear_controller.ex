@@ -2,8 +2,6 @@ defmodule Emperor.BearController do
 
   alias Emperor.Wildthings
   alias Emperor.Bear
-  alias Emperor.BearView
-
   import Emperor.View, only: [render: 3]
 
 

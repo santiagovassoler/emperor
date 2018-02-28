@@ -19,6 +19,10 @@ import Emperor.Parser, only: [parse: 1]
     |> format_response
   end
 
+  def route(%Conv{ method: "GET", path: "/" } = conv) do
+    %{ conv | status: 200, resp_body: "Hello World" }
+  end
+
   def route(%Conv{ method: "GET", path: "/wildthings" } = conv) do
     %{ conv | status: 200, resp_body: "Bears, Lions, Tigers" }
   end

@@ -10,13 +10,13 @@ defmodule Emperor.HttpClient do
   end
 end
 
-request = """
-GET /bears HTTP/1.1\r
-Host: example.com\r
-User-Agent: ExampleBrowser/1.0\r
-Accept: */*\r
-\r
-"""
+#request = """
+#GET /bears HTTP/1.1\r
+#Host: example.com\r
+#User-Agent: ExampleBrowser/1.0\r
+#Accept: */*\r
+#\r
+#{}"""
 
 #response = Emperor.HttpClient.send_request(request)
 #IO.puts response

@@ -4,7 +4,7 @@ defmodule Emperor.Plugins do
 
   @doc "Logs 404 requests"
   def track(%Conv{status: 404, path: path} = conv) do
-    if Mix.env != :test do
+    if Application.get_env(:emperor, :environment) != :test do
       IO.puts "Warning: #{path} is on the loose!"
     end
     conv
@@ -27,7 +27,7 @@ defmodule Emperor.Plugins do
   def rewrite_path_captures(%Conv{} = conv, nil), do: conv
 
   def log(%Conv{} = conv) do
-    if Mix.env == :dev do
+    if Application.get_env(:emperor, :environment) == :prod do
       IO.inspect conv
     end
     conv
