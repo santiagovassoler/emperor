@@ -1,5 +1,6 @@
 ## Name of the node
--name ${MY_NODE_NAME}
+##-name ${MY_NODE_NAME}
+-sname emperor
 
 ## Cookie for distributed erlang
 -setcookie ${MY_COOKIE}
