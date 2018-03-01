@@ -13,6 +13,10 @@ defmodule Emperor.MixProject do
     ]
   end
 
+  # Ensures `test/support/*.ex` files are read during tests
+  def elixirc_paths(:prod), do: ["lib", "pages"]
+  def elixirc_paths(_), do: ["lib"]
+
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
