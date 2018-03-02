@@ -5,7 +5,7 @@ defmodule HttpServerTest do
   alias Emperor.HttpClient
 
   test "accepts a request on a socket and sends back a response" do
-    spawn(HttpServer, :start, [4000])
+    spawn(HttpServer, :start, [3000])
 
     request = """
     GET /wildthings HTTP/1.1\r

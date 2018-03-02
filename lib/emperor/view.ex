@@ -3,9 +3,6 @@ defmodule Emperor.View do
   #@templates_path Path.expand("../../templates", __DIR__)
   @templates_path Path.expand("templates", File.cwd!)
 
-
-
-
   def render(conv, template, bindings \\ []) do
     content =
       @templates_path
