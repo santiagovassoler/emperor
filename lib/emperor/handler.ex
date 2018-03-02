@@ -7,8 +7,6 @@ import Emperor.FileHandler, only: [handle_file: 2]
 import Emperor.Plugins, only: [rewrite_path: 1, log: 1, track: 1]
 import Emperor.Parser, only: [parse: 1]
 
-@pages_path Path.expand("pages", File.cwd!)
-
   def handle(request) do
     request
     |> parse
@@ -48,21 +46,8 @@ import Emperor.Parser, only: [parse: 1]
     BearController.create(conv, conv.params)
   end
 
-  def route(%Conv{ method: "GET", path: "/pages" } = conv) do
-    BearController.pages(conv)
-  end
-
-
-  #@pages Application.app_dir(:emperor, "priv/pages")
-  @pages2 Application.app_dir(:emperor, "pages")
   def route(%Conv{method: "GET", path: "/pages/" <> file} = conv) do
-    ##@pages_path
-    #pages = Application.app_dir(:emperor, "priv/pages")
-    pages = Application.app_dir(:emperor, "pages")
-    IO.puts "--------------------------------------- Hi from " <> pages
-    IO.puts "--------------------------------------- Hi from 2" <> @pages2
-    #IO.puts "Wildcard" <> Path.wildcard(@pages<>"/*")
-    pages
+    Application.app_dir(:emperor, "priv/pages")
     |> Path.join("/"<> file <> ".html")
     |> File.read
     |> handle_file(conv)
