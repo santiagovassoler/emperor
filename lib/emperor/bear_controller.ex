@@ -28,4 +28,9 @@ end
     %{ conv | status: 403, resp_body: "Deleting a bear is forbidden!"}
   end
 
+  def pages(conv) do
+    p =  "Hi from " <> Path.expand("pages", File.cwd!)
+    %{ conv | status: 200, resp_body: BearView.pages(p)}
+  end
+
 end

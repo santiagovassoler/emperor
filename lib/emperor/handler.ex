@@ -48,6 +48,21 @@ import Emperor.Parser, only: [parse: 1]
     BearController.create(conv, conv.params)
   end
 
+  def route(%Conv{ method: "GET", path: "/pages" } = conv) do
+    BearController.pages(conv)
+    #path  = @pages_path <> "/aabout.html"
+    #file = File.read!(path)
+    #a = "<h1>Clark's Wildthings Refuge</h1>\n\n<blockquote>\nWhen we contemplate the whole globe as one great dewdrop, \nstriped and dotted with continents and islands, flying through \nspace with other stars all singing and shining together as one, \nthe whole universe appears as an infinite storm of beauty. \n-- John Muir\n</blockquote>\n"
+    #case a do
+    #    file -> IO.inspect(file, label: "This is the file ->")
+    #    _ -> IO.puts "file not found"
+    #end
+
+    #%{ conv | status: 200, resp_body: "hey this is pages path!! <br><h1> #{@pages_path}</h1><br>
+    #and is this the file that you are looking for #{path}?
+    #{}" }
+  end
+
   def route(%Conv{method: "GET", path: "/pages/" <> file} = conv) do
     @pages_path
     |> Path.join(file <> ".html")
