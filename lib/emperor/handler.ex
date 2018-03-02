@@ -53,11 +53,12 @@ import Emperor.Parser, only: [parse: 1]
   end
 
 
-  @pages Application.app_dir(:emperor, "priv/pages/")
+  @pages Application.app_dir(:emperor, "priv/pages")
   def route(%Conv{method: "GET", path: "/pages/" <> file} = conv) do
     ##@pages_path
+    IO.puts " olha ai o path ->>>" <> @pages |> Path.join("/"<> file <> ".html") 
     @pages
-    |> Path.join(file <> ".html")
+    |> Path.join("/"<> file <> ".html")
     |> File.read
     |> handle_file(conv)
   end
