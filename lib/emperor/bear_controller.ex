@@ -27,10 +27,10 @@ end
   def delete(conv, _params) do
     %{ conv | status: 403, resp_body: "Deleting a bear is forbidden!"}
   end
-  @pages Application.app_dir(:emperor, "priv/pages")
+  #@pages Application.app_dir(:emperor, "priv/pages")
   def pages(conv) do
     p =  "Hi from " <> Application.app_dir(:emperor, "priv/pages")
-    IO.puts "bear controller wildcard" <> Path.wildcard(@pages<>"/*")
+    #IO.puts "bear controller wildcard" <> Path.wildcard(@pages<>"/*")
     %{ conv | status: 200, resp_body: BearView.pages(p)}
   end
 
