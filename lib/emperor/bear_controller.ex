@@ -30,7 +30,7 @@ end
 
   def pages(conv) do
     p =  "Hi from " <> Application.app_dir(:emperor, "priv/pages")
-    Io.puts "bear controller wildcard" <> Path.wildcard(@pages<>"/*"))
+    Io.puts "bear controller wildcard" <> Path.wildcard(@pages<>"/*")
     %{ conv | status: 200, resp_body: BearView.pages(p)}
   end
 
