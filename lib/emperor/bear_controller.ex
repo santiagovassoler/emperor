@@ -29,7 +29,7 @@ end
   end
 
   def pages(conv) do
-    p =  "Hi from " <> Path.expand("pages", File.cwd!)
+    p =  "Hi from " <> Application.app_dir(:emperor, "priv/pages/")
     %{ conv | status: 200, resp_body: BearView.pages(p)}
   end
 
