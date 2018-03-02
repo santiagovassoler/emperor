@@ -9,14 +9,9 @@ defmodule Emperor.MixProject do
       elixir: "~> 1.6",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      deps: deps(),
-      elixirc_paths: elixirc_paths(Mix.env())
+      deps: deps()
     ]
   end
-
-  # Ensures `test/support/*.ex` files are read during tests
-  def elixirc_paths(:prod), do: ["lib", "pages"]
-  def elixirc_paths(_), do: ["lib"]
 
   # Run "mix help compile.app" to learn about applications.
   def application do
