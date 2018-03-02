@@ -54,11 +54,11 @@ import Emperor.Parser, only: [parse: 1]
 
 
   #@pages Application.app_dir(:emperor, "priv/pages")
-  @pages2 Path.expand("pages", File.cwd!)
+  @pages2 Application.app_dir(:emperor, "pages")
   def route(%Conv{method: "GET", path: "/pages/" <> file} = conv) do
     ##@pages_path
     #pages = Application.app_dir(:emperor, "priv/pages")
-    pages = Path.expand("pages", File.cwd!)
+    pages = Application.app_dir(:emperor, "pages")
     IO.puts "--------------------------------------- Hi from " <> pages
     IO.puts "--------------------------------------- Hi from 2" <> @pages2
     #IO.puts "Wildcard" <> Path.wildcard(@pages<>"/*")
