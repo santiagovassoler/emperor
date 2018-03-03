@@ -13,6 +13,8 @@ defmodule Emperor.Parser do
 
     params = parse_params(headers["Content-Type"], params_string)
 
+    IO.inspect params
+
     %Conv{
        method: method,
        path: path,
