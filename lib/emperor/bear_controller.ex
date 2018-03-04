@@ -17,15 +17,24 @@ defmodule Emperor.BearController do
     %{ conv | status: 200, resp_body: BearView.show(bear) }
   end
 
-  def create(conv, %{"name" => name, "type" => type}) do
+@optional_params %{"name" => "default3", "type" => "default4"}
 
-    %{ conv | status: 201, resp_body: "Created a #{type} bear named #{name}!" }
-  end
+def create(conv, %{"name" => name, "type" => type} = params) do
+  # `params` has precedence over `@optional_params`, that's why we're using it
+  # as the second argument here.
+  params = Map.merge(@optional_params, params)
+  IO.inspect params
+  %{ conv | status: 201, resp_body: "Created a #{type} bear named #{name}!" }
+end
 
-  def create(conv, _) do
-   IO.puts("-----------------------------------Create function from bear controller---------------------------------")
-   %{ conv | status: 201, resp_body: "Created nothing my man!" }
-  end
+
+#  def create(conv, %{"name" => name, "type" => type}) do
+#    %{ conv | status: 201, resp_body: "Created a #{type} bear named #{name}!" }
+#  end
+
+#  def create(conv, _) do
+#   %{ conv | status: 200, resp_body: "Created nothing my man!" }
+#  end
 
   def delete(conv, _params) do
     %{ conv | status: 403, resp_body: "Deleting a bear is forbidden!"}

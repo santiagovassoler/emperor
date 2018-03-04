@@ -42,12 +42,11 @@ import Emperor.Parser, only: [parse: 1]
     BearController.show(conv, params)
   end
 
-  def route(%Conv{method: "POST", path: "/bears"} = conv) do
-    IO.inspect conv
+  def route(%Conv{ method: "POST", path: "/bears"} = conv) do
     BearController.create(conv, conv.params)
   end
 
-  def route(%Conv{method: "GET", path: "/pages/" <> file} = conv) do
+  def route(%Conv{ method: "GET", path: "/pages/" <> file} = conv) do
     Application.app_dir(:emperor, "priv/pages")
     |> Path.join("/"<> file <> ".html")
     |> File.read
