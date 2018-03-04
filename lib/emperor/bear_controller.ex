@@ -18,6 +18,8 @@ defmodule Emperor.BearController do
   end
 
 def create(conv, %{"name" => name, "type" => type}) do
+  IO.inspect conv.params
+  IO.puts "#{type} - #{name}"
   %{ conv | status: 201, resp_body: "Created a #{type} bear named #{name}!" }
 end
 
