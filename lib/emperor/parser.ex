@@ -3,6 +3,7 @@ defmodule Emperor.Parser do
   alias Emperor.Conv
 
   def parse(request) do
+    IO.inspect request,label: "this is the request"
     [top, params_string] = String.split(request, "\r\n\r\n")
 
     [request_line | header_lines] = String.split(top, "\r\n")

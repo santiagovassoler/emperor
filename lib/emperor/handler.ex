@@ -42,10 +42,13 @@ import Emperor.Parser, only: [parse: 1]
     BearController.show(conv, params)
   end
 
-
-  def route(%Conv{ method: "POST", path: "/bears"} = conv) do
-    BearController.create(conv, conv.params)
+  def route(%Conv{method: "POST", path: "/bears"} = conv) do
+    %{ conv | status: 201,
+              resp_body: "Created a #{conv.params["type"]} bear named #{conv.params["name"]}!" }
   end
+  #def route(%Conv{ method: "POST", path: "/bears"} = conv) do
+  #  BearController.create(conv, conv.params)
+  #end
 
   def route(%Conv{ method: "GET", path: "/pages/" <> file} = conv) do
     Application.app_dir(:emperor, "priv/pages")
