@@ -18,13 +18,13 @@ defmodule Emperor.BearController do
   end
 
   def create(conv, %{"name" => name, "type" => type}) do
+
     %{ conv | status: 201, resp_body: Poison.encode!("Created a #{type} bear named #{name}!") }
   end
 
   def create(conv, _) do
    IO.puts("-----------------------------------Create function from bear controller---------------------------------")
-   IO.inspect conv
-   IO.puts("-----------------------------------              end                   ---------------------------------")
+   %{ conv | status: 201, resp_body: Poison.encode!("Created a #{type} bear named #{name}!") }
   end
 
   def delete(conv, _params) do
