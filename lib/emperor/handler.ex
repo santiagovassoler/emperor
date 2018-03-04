@@ -43,7 +43,7 @@ import Emperor.Parser, only: [parse: 1]
   end
 
   def route(%Conv{method: "POST", path: "/bears"} = conv) do
-    IO.inspect conv.params
+    IO.inspect conv
     BearController.create(conv, conv.params)
   end
 
