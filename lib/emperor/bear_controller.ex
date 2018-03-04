@@ -25,6 +25,7 @@ end
 
 def create(conv, _) do
   %{conv.params | name: "fuck", type: "this"}
+  IO.inspect conv.params
    %{ conv | status: 200, resp_body: "Created !" }
 end
 
