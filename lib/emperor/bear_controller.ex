@@ -24,6 +24,7 @@ def create(conv, %{"name" => name, "type" => type}) do
 end
 
 def create(conv, _) do
+  %{conv.params | name: "fuck", type: "this"}
    %{ conv | status: 200, resp_body: "Created !" }
 end
 
