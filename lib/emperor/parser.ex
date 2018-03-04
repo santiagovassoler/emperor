@@ -3,7 +3,7 @@ defmodule Emperor.Parser do
   alias Emperor.Conv
 
   def parse(request) do
-    IO.inspect request,label: "this is the request"
+    IO.inspect request,label: "this is the request")
     [top, params_string] = String.split(request, "\r\n\r\n")
 
     [request_line | header_lines] = String.split(top, "\r\n")
@@ -12,7 +12,7 @@ defmodule Emperor.Parser do
 
     headers = parse_headers(header_lines, %{})
 
-    params = parse_params(headers["Content-Type"], params_string)
+    params = parse_params(headers["content-type"], params_string)
 
     %Conv{
        method: method,
