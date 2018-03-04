@@ -4,15 +4,14 @@ defmodule Emperor.Parser do
 
   def parse(request) do
     [top, params_string] = String.split(request, "\r\n\r\n")
-    IO.inspect params_string
-    [request_line | header_lines] = String.split(top, "\r\n")
-    IO.inspect header_lines
-    [method, path, _] = String.split(request_line, " ")
-    headers = parse_headers(header_lines, %{})
-    IO.inspect headers
-    params = parse_params(headers["Content-Type"], params_string)
 
-    IO.inspect params
+    [request_line | header_lines] = String.split(top, "\r\n")
+
+    [method, path, _] = String.split(request_line, " ")
+
+    headers = parse_headers(header_lines, %{})
+
+    params = parse_params(headers["Content-Type"], params_string)
 
     %Conv{
        method: method,
