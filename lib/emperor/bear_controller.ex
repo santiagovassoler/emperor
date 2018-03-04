@@ -24,7 +24,7 @@ defmodule Emperor.BearController do
 
   def create(conv, _) do
    IO.puts("-----------------------------------Create function from bear controller---------------------------------")
-   %{ conv | status: 201, resp_body: "Created nothing my man!") }
+   %{ conv | status: 201, resp_body: "Created nothing my man!" }
   end
 
   def delete(conv, _params) do
