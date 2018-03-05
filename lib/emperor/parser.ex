@@ -9,12 +9,11 @@ defmodule Emperor.Parser do
 
     [method, path, _] = String.split(request_line, " ")
 
-    headers_map = parse_headers(header_lines, %{})
-    headers = for {k, v} <- headers_map, into: %{}, do: {String.downcase(k), v}
+    headers = parse_headers(header_lines, %{})
+  
+    params = parse_params(headers["content-type"], params_string)
 
     IO.inspect headers
-
-    params = parse_params(headers["content-type"], params_string)
 
     %Conv{
        method: method,
@@ -27,7 +26,7 @@ defmodule Emperor.Parser do
 
   def parse_headers([head | tail], headers) do
     [key, value] = String.split(head, ": ")
-    headers = Map.put(headers, key, value)
+    headers = Map.put(headers, String.downcase(key), value)
     parse_headers(tail, headers)
   end
 
