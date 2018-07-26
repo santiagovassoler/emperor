@@ -1,8 +1,8 @@
 
-<h1>All The Bears!</h1>
+<h1>All The Languages!</h1>
 
 <ul>
-  <%= for bear <- bears do %>
-    <li><%= bear.name %> - <%= bear.type %></li>
+  <%= for language <- languages do %>
+    <li><%= language.name %> - <%= language.type %></li>
   <% end %>
 </ul>

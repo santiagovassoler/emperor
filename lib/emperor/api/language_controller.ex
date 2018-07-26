@@ -1,8 +1,8 @@
-defmodule Emperor.Api.BearController do
+defmodule Emperor.Api.LanguageController do
 
   def index(conv) do
     json =
-      Emperor.Wildthings.list_bears()
+      Emperor.Paradigm.list_languages()
       |> Poison.encode!
 
     %{ conv | status: 200, resp_content_type: "application/json", resp_body: json }

@@ -1,7 +1,7 @@
 defmodule Emperor.Handler do
 
 alias  Emperor.Conv
-alias  Emperor.BearController
+alias  Emperor.LanguageController
 
 import Emperor.FileHandler, only: [handle_file: 2]
 import Emperor.Plugins, only: [rewrite_path: 1, log: 1, track: 1]
@@ -17,37 +17,29 @@ import Emperor.Parser, only: [parse: 1]
     |> format_response
   end
 
-  def route(%Conv{ method: "GET", path: "/" } = conv) do
+  def route(%Conv{ method: "GET", path: "/helloworld" } = conv) do
     %{ conv | status: 200, resp_body: "Hello World" }
   end
 
-  def route(%Conv{ method: "GET", path: "/wildthings" } = conv) do
-    %{ conv | status: 200, resp_body: "Bears, Lions, Tigers" }
+  def route(%{method: "DELETE", path: "/languages/" <> _id} = conv) do
+    LanguageController.delete(conv, conv.params)
   end
 
-  def route(%{method: "DELETE", path: "/bears/" <> _id} = conv) do
-    BearController.delete(conv, conv.params)
+  def route(%Conv{ method: "GET", path: "/api/languages" } = conv) do
+    Emperor.Api.LanguageController.index(conv)
   end
 
-  def route(%Conv{ method: "GET", path: "/api/bears" } = conv) do
-    Emperor.Api.BearController.index(conv)
+  def route(%Conv{ method: "GET", path: "/languages" } = conv) do
+    LanguageController.index(conv)
   end
 
-  def route(%Conv{ method: "GET", path: "/bears" } = conv) do
-    BearController.index(conv)
-  end
-
-  def route(%Conv{ method: "GET", path: "/bears/" <> id } = conv) do
+  def route(%Conv{ method: "GET", path: "/languages/" <> id } = conv) do
     params = Map.put(conv.params, "id", id)
-    BearController.show(conv, params)
+    LanguageController.show(conv, params)
   end
 
-  #def route(%Conv{method: "POST", path: "/bears"} = conv) do
-  #  %{ conv | status: 201,
-  #            resp_body: "Created a #{conv.params["type"]} bear named #{conv.params["name"]}!" }
-  #end
-  def route(%Conv{ method: "POST", path: "/bears"} = conv) do
-    BearController.create(conv, conv.params)
+  def route(%Conv{ method: "POST", path: "/languages"} = conv) do
+    LanguageController.create(conv, conv.params)
   end
 
   def route(%Conv{ method: "GET", path: "/pages/" <> file} = conv) do
@@ -58,14 +50,14 @@ import Emperor.Parser, only: [parse: 1]
   end
 
   def route(%Conv{ path: path } = conv) do
-    %{ conv | status: 404, resp_body: "No #{path} here!"}
+    %{ conv | status: 404, resp_body: "<h1>404</h1><br>Sorry #{path} not found!"}
   end
 
   def format_response(%Conv{} = conv) do
     """
     HTTP/1.1 #{Conv.full_status(conv)}\r
     content-type: #{conv.resp_content_type}\r
-    Content-Length: #{String.length(conv.resp_body)}\r
+    content-length: #{String.length(conv.resp_body)}\r
     \r
     #{conv.resp_body}
     """
